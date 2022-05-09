@@ -2,8 +2,10 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../ast/ast.h"
 #include "../buffer/buffer.h"
 
+// Return the next char* in the buffer and put the cursor at the end of this char*
 char *lexer_getalphanum (buffer_t * buffer) {
   long counter = buffer->it;
   char *alphanum = malloc(BUF_SIZE);
@@ -28,7 +30,8 @@ char *lexer_getalphanum (buffer_t * buffer) {
   return alphanum;
 }
 
-char * lexer_getalphanum_rollback(buffer_t * buffer){
+// Return the next char* in the buffer and don't move the cursor
+char *lexer_getalphanum_rollback(buffer_t * buffer){
   long counter = buffer->it;
   long initialpos = buffer->it;
   int x = 0;
@@ -53,6 +56,7 @@ char * lexer_getalphanum_rollback(buffer_t * buffer){
   return alphanum;
 }
 
+// Return the next char* in the buffer if convert it to a long or else return 0
 long lexer_getnumber (buffer_t * buffer){
 
   long counter = buffer->it;
@@ -80,4 +84,20 @@ long lexer_getnumber (buffer_t * buffer){
   if (alphanum != NULL) free(alphanum);
 
   return result;
+}
+
+// Loop through lexers and tests the syntax
+void parser(buffer_t * buffer) {
+  while (buf_eof(buffer) == false)
+  {
+    char *getalphanum = lexer_getalphanum(buffer);
+    printf("%s\n",getalphanum);
+
+    buf_skipblank(buffer);
+
+    if (getalphanum != NULL)
+    {
+      free(getalphanum);
+    }
+  }
 }

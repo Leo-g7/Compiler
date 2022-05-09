@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include "services/buffer/buffer.h"
 #include "services/lexer/lexer.h"
+#include "services/ast/ast.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   if (argc == 2 || argc == 5)
   {
@@ -13,25 +14,20 @@ int main(int argc, char* argv[])
     if (filename != NULL)
     {
       buffer_t buffer;
-      FILE* file = fopen(filename, "r");
+      FILE *file = fopen(filename, "r");
 
       if (file != NULL)
       {
-        buf_init(&buffer, file);
-        buf_lock (&buffer);
+        // buf_init(&buffer, file);
+        // buf_lock(&buffer);
+        // parser(&buffer);
 
-        while (buf_eof(&buffer) == false)
+        ast_t *node = ast_new_integer(10);
+        printf("%d\n", node->integer);
+
+        if (node != NULL)
         {
-          char *getalphanum = lexer_getalphanum(&buffer);
-
-          printf("%s\n",getalphanum);
-
-          buf_skipblank(&buffer);
-
-          if (getalphanum != NULL)
-          {
-            free(getalphanum);
-          }
+          free(node);
         }
       }
       else
