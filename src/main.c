@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[])
 {
-  if (argc == 2)
+  if (argc == 2 || argc == 5)
   {
     char *filename = argv[1];
     if (filename != NULL)
