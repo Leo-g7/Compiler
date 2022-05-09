@@ -14,6 +14,7 @@ int main(int argc, char* argv[])
     {
       buffer_t buffer;
       FILE* file = fopen(filename, "r");
+
       if (file != NULL)
       {
         buf_init(&buffer, file);
