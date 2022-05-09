@@ -13,7 +13,7 @@ char *lexer_getalphanum (buffer_t * buffer) {
   {
     char c = buf_getchar(buffer);
 
-    if(++counter < buffer->it || (isalpha(c) == 0 && !isdigit(c)))
+    if(++counter < buffer->it || (isalpha(c) == 0 && !isdigit(c) && ispunct(c) == 0))
     {
       buf_rollback(buffer,buffer->it-counter+1);
       alphanum[x] = '\0';
@@ -38,7 +38,7 @@ char * lexer_getalphanum_rollback(buffer_t * buffer){
   {
     char c = buf_getchar(buffer);
 
-    if(++counter < buffer->it || (isalpha(c) == 0 && !isdigit(c)))
+    if(++counter < buffer->it || (isalpha(c) == 0 && !isdigit(c) && ispunct(c) == 0))
     {
       alphanum[x] = '\0';
       buf_rollback(buffer,buffer->it-initialpos);
