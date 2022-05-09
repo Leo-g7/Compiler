@@ -16,7 +16,6 @@ char *lexer_getalphanum (buffer_t * buffer) {
     if(++counter < buffer->it || (isalpha(c) == 0 && !isdigit(c) && ispunct(c) == 0))
     {
       buf_rollback(buffer,buffer->it-counter+1);
-      alphanum[x] = '\0';
       break;
     }
     else
@@ -24,6 +23,7 @@ char *lexer_getalphanum (buffer_t * buffer) {
       alphanum[x++] = c;
     }
   }
+  alphanum[x] = '\0';
 
   return alphanum;
 }
@@ -40,7 +40,6 @@ char * lexer_getalphanum_rollback(buffer_t * buffer){
 
     if(++counter < buffer->it || (isalpha(c) == 0 && !isdigit(c) && ispunct(c) == 0))
     {
-      alphanum[x] = '\0';
       buf_rollback(buffer,buffer->it-initialpos);
       break;
     }
@@ -49,7 +48,7 @@ char * lexer_getalphanum_rollback(buffer_t * buffer){
       alphanum[x++] = c;
     }
   }
-
+  alphanum[x] = '\0';
 
   return alphanum;
 }
@@ -67,7 +66,6 @@ long lexer_getnumber (buffer_t * buffer){
     if(++counter < buffer->it || (!isdigit(c) && !(x == 0 && c == '-'))  )
     {
       buf_rollback(buffer,buffer->it-counter+1);
-      alphanum[x] = '\0';
       break;
     }
     else
@@ -75,7 +73,7 @@ long lexer_getnumber (buffer_t * buffer){
       alphanum[x++] = c;
     }
   }
-
+  alphanum[x] = '\0';
   char* endPtr = NULL;
   long result = strtol(alphanum,&endPtr,10);
 
