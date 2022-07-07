@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-bool is_expected_lexem (char *lexem, char *expected)
+bool is_expected_lexem(char *lexem, char *expected)
 {
   if (strcmp(lexem, expected))
   {
@@ -14,16 +14,17 @@ bool is_expected_lexem (char *lexem, char *expected)
   return true;
 }
 
-void analyze_function_params(buffer_t * buffer) {
-  ast_list_t* params;
-  char* lexer = move_to_next_lexer(buffer);
+void analyze_function_params(buffer_t *buffer)
+{
+  ast_list_t *params;
+  char *lexer = move_to_next_lexer(buffer);
 
-  if(!is_expected_lexem(lexer, "("))
+  if (!is_expected_lexem(lexer, "("))
   {
     printf("Error: function wrongly defined\n");
     exit(1);
   }
-  else if(is_expected_lexem(lexer, "("))
+  else if (is_expected_lexem(lexer, "("))
   {
     lexer = move_to_next_lexer(buffer);
     while (!is_expected_lexem(lexer, ")"))
@@ -36,7 +37,8 @@ void analyze_function_params(buffer_t * buffer) {
   free_lexer(lexer);
 }
 
-void analyze_function(buffer_t * buffer) {
+void analyze_function(buffer_t *buffer)
+{
   buf_move_lock(buffer);
   char *functionName = move_to_next_lexer(buffer);
   ast_list_t *params;
@@ -50,6 +52,20 @@ void parser(FILE *file)
   buffer_t buffer;
   buf_init(&buffer, file);
   buf_lock(&buffer);
+
+  // create a ast_integer and display it
+  long value = 42;
+  ast_t *test = ast_new_integer(value);
+  ast_display(test, 0);
+
+  // same for ast_binary
+  ast_binary_e op = AST_PLUS;
+  ast_t *test2 = ast_new_binary(op, NULL, NULL);
+  ast_display(test2, 0);
+
+  // same for function
+  
+
 
   ast_list_t *ast_list;
 

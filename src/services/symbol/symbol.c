@@ -20,6 +20,7 @@ void sym_remove(symbol_t **table, symbol_t *sym) {
         *table = tmp->next;
         return;
     }
+
     while (tmp->next != NULL) {
         if (tmp->next == sym) {
             tmp->next = tmp->next->next;

@@ -158,3 +158,74 @@ ast_list_t *ast_list_add(ast_list_t **list, ast_t *elem)
     }
 }
 
+void ast_display(ast_t *node, int level) {
+    printf("start", node, level);
+    if (node == NULL)
+        return;
+        
+    for (int i = 0; i < level; i++)
+        printf("  ");
+    switch (node->type)
+    {
+    case AST_INTEGER:
+        printf("int");
+        printf("%ld\n", node->integer);
+        break;
+    case AST_VARIABLE:
+        printf("var\n");
+        printf("%s\n", node->var.name);
+        printf("%d\n", node->var.type);
+        break;
+    case AST_BINARY:
+        printf("bin\n");
+        printf("%d\n", node->binary.op);
+        ast_display(node->binary.left, level + 1);
+        ast_display(node->binary.right, level + 1);
+        break;
+    // case AST_FUNCTION:
+    //     printf("func\n");
+    //     printf("%s\n", node->function.name);
+    //     printf("%d\n", node->function.return_type);
+    //     ast_display(node->function.params, level + 1);
+    //     ast_display(node->function.stmts, level + 1);
+    //     break;
+    // case AST_FNCALL:
+    //     printf("fncall\n");
+    //     printf("%s\n", node->call.name);
+    //     ast_display(node->call.args, level + 1);
+    //     break;
+    // case AST_COMPOUND_STATEMENT:
+    //     printf("comp\n");
+    //     ast_display(node->compound_stmt.stmts, level + 1);
+    //     break;
+    // case AST_ASSIGNMENT:
+    //     printf("assign\n");
+    //     ast_display(node->assignment.lvalue, level + 1);
+    //     ast_display(node->assignment.rvalue, level + 1);
+    //     break;
+    // case AST_DECLARATION:
+    //     printf("decl\n");
+    //     ast_display(node->declaration.lvalue, level + 1);
+    //     ast_display(node->declaration.rvalue, level + 1);
+    //     break;
+    // case AST_CONDITION:
+    //     printf("cond\n");
+    //     ast_display(node->branch.condition, level + 1);
+    //     ast_display(node->branch.valid, level + 1);
+    //     ast_display(node->branch.invalid, level + 1);
+    //     break;
+    // case AST_LOOP:
+    //     printf("loop\n");
+    //     ast_display(node->loop.condition, level + 1);
+    //     ast_display(node->loop.stmt, level + 1);
+    //     break;
+    // case AST_RETURN:
+    //     printf("ret\n");
+    //     ast_display(node->ret.expr, level + 1);
+    //     break;
+    }
+
+    printf("end");
+}
+
+
