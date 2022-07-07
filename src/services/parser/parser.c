@@ -97,9 +97,9 @@ void parser(FILE *file)
   buf_lock(&buffer);
 
   // create a ast_integer and display it
-  long value = 42;
-  ast_t *test = ast_new_integer(value);
-  ast_display(test, 0);
+  // long value = 42;
+  // ast_t *test = ast_new_integer(value);
+  // ast_display(test, 0);
 
   // // same for ast_binary
   // ast_binary_e op = AST_PLUS;
