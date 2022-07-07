@@ -175,6 +175,8 @@ void analyze_function(buffer_t *buffer)
   ast_list_t *params = analyze_function_params(buffer);
   int return_type = analyze_type(buffer);
 
+  //printf("%s\n", functionName);
+
   // I mad every analyze function return void but they should return ast_list_t*
 
   //ast_list_t *stmts =
@@ -194,89 +196,6 @@ void parser(FILE *file)
   buffer_t buffer;
   buf_init(&buffer, file);
   buf_lock(&buffer);
-
-  // create a ast_integer and display it
-  // long value = 42;
-  // ast_t *test = ast_new_integer(value);
-  // ast_display(test, 0);
-
-  // // same for ast_binary
-  // ast_binary_e op = AST_PLUS;
-  // ast_t *test2 = ast_new_binary(op, NULL, NULL);
-  // ast_display(test2, 0);
-
-  // same for function
-
-  // testing symbol table
-  symbol_t *table = NULL;
-  symbol_t *test = sym_new("test4", AST_INTEGER, NULL);
-  sym_add(&table, test);
-  // print table
-  printf("print 1\n");
-  symbol_t *tmp = table;
-  while (tmp != NULL)
-  {
-    printf("%s\n", tmp->name);
-    tmp = tmp->next;
-  }
-  // remove test from table
-  sym_remove(&table, test);
-  // print table
-  printf("print 2\n");
-  tmp = table;
-  while (tmp != NULL)
-  {
-    printf("%s\n", tmp->name);
-    tmp = tmp->next;
-  }
-  // add test with new attributes to table
-  ast_t *attributes = ast_new_integer(42);
-  symbol_t * test2 = sym_new("test2", AST_INTEGER, attributes);
-  sym_add(&table, test2);
-  // print table
-  printf("print 3\n");
-  tmp = table;
-  while (tmp != NULL)
-  {
-    printf("%s\n", tmp->name);
-    tmp = tmp->next;
-  }
-  // remove test2 from table
-  sym_remove(&table, test2);
-  // print table
-  tmp = table;
-  while (tmp != NULL)
-  {
-    printf("%s\n", tmp->name);
-    tmp = tmp->next;
-  }
-  // add tests back to table
-  sym_add(&table, test);
-  sym_add(&table, test2);
-  // print table
-  printf("print 4\n");
-  tmp = table;
-  while (tmp != NULL)
-  {
-    printf("%s\n", tmp->name);
-    tmp = tmp->next;
-  }
-  //search for test in table
-  printf("search for test number 1\n");
-  symbol_t *test3 = sym_search(table, "test4");
-  printf("%s\n", test3->name);
-  // search for test2 in table
-  printf("search for test number 2\n");
-  symbol_t *test4 = sym_search(table, "test2");
-  printf("%s\n", test4->name);
-  // search for test3 in table
-  symbol_t *test5 = sym_search(table, "test3");
-  // delete table
-  sym_delete(test);
-  sym_delete(test2);
-  sym_delete(table);
-  
-
   ast_list_t *ast_list;
 
   while (buf_eof(&buffer) == false)
