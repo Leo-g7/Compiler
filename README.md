@@ -9,7 +9,10 @@ gcc src/main.c src/services/buffer/buffer.c src/utils/utils.c src/services/lexer
 ## Run App
 
 ```
-app.exe input/test.intech
+pws
+.\app.exe input/test.intech
+bash 
+./app.exe input/test.intech
 ```
 
 ## Note
