@@ -85,6 +85,19 @@ void buf_move_it_bw (buffer_t *buffer, size_t cnt) {
   buffer->currchar -= cnt;
 }
 
+void buf_move_lock(buffer_t *buffer){
+  buf_unlock(buffer);
+  buf_lock(buffer);
+}
+
+void buf_move_to_lock(buffer_t *buffer){
+  if (!buffer->islocked) {
+    fprintf(stderr, "Warning: lock was not set.\n");
+  }
+  buffer->it = buffer->lock;
+  buffer->islocked = true;
+}
+
 char buf_getchar (buffer_t *buffer)
 {
   size_t end;
