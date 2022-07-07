@@ -5,7 +5,7 @@ typedef enum
   AST_VOID,
   AST_INTEGER,
   AST_BINARY,
-  AST_UNARY,
+  AST_OPERAND,
   AST_FUNCTION,
   AST_FNCALL,
   AST_VARIABLE,
@@ -57,9 +57,9 @@ typedef struct ast_t
     } binary;
     struct
     {
-      char op;
-      struct ast_t *operand;
-    } unary;
+      char* operValue;
+      struct ast_t *nextOper;
+    } operand;
     struct
     {
       char *name;
@@ -125,6 +125,8 @@ ast_t *ast_new_variable(char *name, int type);
 // ast_t *ast_new_return(ast_t *expr);
 // ast_list_t *ast_list_new_node(ast_t *elem);
 // ast_list_t *ast_list_add(ast_list_t **list, ast_t *elem);
+
+ast_t *ast_new_operand(char *op, ast_t *next);
 
 #define AST_H
 #endif /* AST_H */
