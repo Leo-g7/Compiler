@@ -2,9 +2,7 @@
 
 #include <windows.h>
 #include <stdio.h>
-#include "services/buffer/buffer.h"
-#include "services/lexer/lexer.h"
-#include "services/ast/ast.h"
+#include "services/parser/parser.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,22 +11,10 @@ int main(int argc, char *argv[])
     char *filename = argv[1];
     if (filename != NULL)
     {
-      buffer_t buffer;
       FILE *file = fopen(filename, "r");
-
       if (file != NULL)
       {
-        // buf_init(&buffer, file);
-        // buf_lock(&buffer);
-        // parser(&buffer);
-
-        ast_t *node = ast_new_integer(10);
-        printf("%d\n", node->integer);
-
-        if (node != NULL)
-        {
-          free(node);
-        }
+        parser(file);
       }
       else
       {

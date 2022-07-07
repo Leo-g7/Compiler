@@ -85,6 +85,11 @@ void buf_move_it_bw (buffer_t *buffer, size_t cnt) {
   buffer->currchar -= cnt;
 }
 
+void buf_move_lock(buffer_t *buffer){
+  buf_unlock(buffer);
+  buf_lock(buffer);
+}
+
 char buf_getchar (buffer_t *buffer)
 {
   size_t end;
