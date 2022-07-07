@@ -19,6 +19,7 @@ ast_t* ast_new_operand(char* op, ast_t* ast) {
     node->operand.nextOper =  ast;
     node->operand.operValue = op;
     node->type = AST_OPERAND;
+    return node;
 }
 // Create a new variable ast tree
 ast_t *ast_new_variable(char *name, int type)
@@ -168,7 +169,7 @@ void ast_display(ast_t *node, int level) {
     printf("start", node, level);
     if (node == NULL)
         return;
-        
+
     for (int i = 0; i < level; i++)
         printf("  ");
     switch (node->type)
