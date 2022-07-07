@@ -30,6 +30,7 @@ char buf_getchar_rollback (buffer_t *buffer);
 void buf_getnchar (buffer_t *buffer, char *out, size_t n);
 void buf_forward (buffer_t *buffer, size_t n);
 void buf_move_lock(buffer_t *buffer);
+void buf_move_to_lock(buffer_t *buffer);
 void buf_rollback (buffer_t *buffer, size_t n);
 void buf_lock (buffer_t *buffer);
 void buf_unlock (buffer_t *buffer);

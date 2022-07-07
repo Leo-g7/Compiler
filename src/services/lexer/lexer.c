@@ -107,7 +107,7 @@ long lexer_getnumber (buffer_t * buffer){
   return result;
 }
 
-char *move_to_next_lexer(buffer_t * buffer) {
+char *move_to_next_lexem(buffer_t * buffer) {
   buf_skipblank(buffer);
   return lexer_getalphanum(buffer);
 }
