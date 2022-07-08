@@ -7,6 +7,7 @@
 #include "../ast/ast.h"
 #include "../../utils/stack.h"
 
+// launch this test to try convertExpressionIntoAst
 void testConversion() {
   ast_list_t* ast_list = NULL;
   ast_list_add(&ast_list, ast_new_integer(1));
@@ -27,7 +28,8 @@ void testConversion() {
 
 char* strfromlonglong(long value);
 
-//takes the expression and returns the ast expression (output)
+//takes the expression and should have returned the ast expression (output)
+// Currently is not completly done (almost !)
 ast_t* convertExpressionIntoAst(ast_list_t* entryAst) {
   ast_list_t* loopAst = entryAst;
   int size = get_ast_size(entryAst);
@@ -64,7 +66,7 @@ ast_t* convertExpressionIntoAst(ast_list_t* entryAst) {
   return ast;
 }
 
-// attributes are not the same according to the ast type, this functions check the ast type and returns the value of the ast
+// attributes are not the same according to the ast type, this functions check the ast type and returns the value of the ast as a char*
 char* getValueFromAst(ast_t* ast) {
   if(ast->type == 1) { // AST_INTEGER
     char* str = strfromlonglong(ast->integer);
@@ -137,6 +139,7 @@ void exitProgram(char* msg) {
   exit(0);
 }
 
+// converts long to str
 char* strfromlonglong(long value) {
   char buf[32], *p;
   unsigned long v;
