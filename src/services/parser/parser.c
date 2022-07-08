@@ -61,6 +61,8 @@ void analyze_condition(buffer_t * buffer)
   while(!is_expected_lexem(lexem, "}")){
     lexem = move_to_next_lexem(buffer);
   }
+  
+  // proceed to the analysis of the expression in the if statement
 }
 
 void analyze_loop(buffer_t * buffer)
@@ -69,6 +71,7 @@ void analyze_loop(buffer_t * buffer)
 
   while(!is_expected_lexem(lexem, "}") ){
     lexem = move_to_next_lexem(buffer);
+    printf("%s\n", lexem);
   }
 }
 
@@ -96,7 +99,7 @@ void analyze_instruction(buffer_t * buffer,char* lexem)
   {
     analyze_return(buffer);
   }
-  else if(is_expected_lexem(lexem, "si"))
+  else if(is_expected_lexem(lexem, "si")|| is_expected_lexem(lexem, "sinon"))
   {
     analyze_condition(buffer);
   }

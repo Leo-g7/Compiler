@@ -53,3 +53,10 @@ symbol_t *sym_search(symbol_t *table, char *name) {
     }
     return NULL;
 }
+void sym_print_list(symbol_t *table) {
+    symbol_t *tmp = table;
+    while (tmp != NULL) {
+        printf("%s\n", tmp->name);
+        tmp = tmp->next;
+    }
+}
