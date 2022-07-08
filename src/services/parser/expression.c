@@ -28,9 +28,9 @@ ast_t* convertExpressionIntoAst(ast_list_t* entryAst) {
   while(loopFlag) { // if next ast is not null
     if(loopAst->next == NULL) loopFlag = false;
     else {
-      if(!operandPriority(top(stk), loopAst->ast.)) {
+      //if(!operandPriority(top(stk), loopAst->ast.)) {
 
-      }
+      //}
       loopAst = next_ast(loopAst);
     }
   }
@@ -61,7 +61,9 @@ ast_t* convertExpressionIntoAst(ast_list_t* entryAst) {
 }
 //take the expression and returning the ast expression (output)
 
-char* getValueFromAst()
+char* getValueFromAst() {
+  
+}
 
 // check if string is a number
 bool isNumber(char* value) {
