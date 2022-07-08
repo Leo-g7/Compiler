@@ -7,13 +7,13 @@
  */
 struct stack_t *newStack()
 {
-  struct stack_t *stack = malloc(sizeof(stack_t));
-  if (stack)
+  struct stack_t *stk = (stack_t*) malloc(sizeof(stack_t));
+  if (stk)
   {
-    stack->head = NULL;
-    stack->stackSize = 0;
+    stk->head = NULL;
+    stk->stackSize = 0;
   }
-  return stack;
+  return stk;
 }
 
 /**
@@ -34,10 +34,10 @@ char *copyString(char *str)
  */
 void push(struct stack_t *theStack, char *value)
 {
-  struct stack_entry *entry = malloc(sizeof *entry); 
+  struct stack_entry *entry = (stack_entry*) malloc(sizeof(stack_entry)); 
   if (entry)
   {
-    entry->data = copyString(value);
+    strcpy(entry->data, value);
     entry->next = theStack->head;
     theStack->head = entry;
     theStack->stackSize++;

@@ -5,7 +5,7 @@
  * Type for individual stack entry
  */
 typedef struct stack_entry {
-  char *data;
+  char data[15];
   struct stack_entry *next;
 } stack_entry;
 
@@ -14,7 +14,7 @@ typedef struct stack_entry {
  */
 typedef struct stack_t
 {
-  struct stack_entry *head;
+  stack_entry *head;
   size_t stackSize;  // not strictly necessary, but
                      // useful for logging
 } stack_t;
