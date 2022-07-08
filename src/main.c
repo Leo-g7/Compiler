@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 {
   if (argc == 2 || argc == 5)
   {
-    testConversion();
+    //testConversion();
     char *filename = argv[1];
     if (filename != NULL)
     {
