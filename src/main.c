@@ -9,9 +9,6 @@
 #include "services/parser/parser.h"
 #include "services/parser/expression.h"
 
-ast_t* convertExpressionIntoAst(ast_list_t* entryAst);
-bool operandPriority(char* op1, char* op2);
-// void exitProgram(char* msg);
 int main(int argc, char *argv[])
 {
   // Check argc
