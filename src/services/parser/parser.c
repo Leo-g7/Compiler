@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+// compare two lexem
 bool is_expected_lexem(char *lexem, char *expected)
 {
   if (strcmp(lexem, expected))
@@ -15,6 +16,7 @@ bool is_expected_lexem(char *lexem, char *expected)
   return true;
 }
 
+// get a variable type as a string and return its matching enum type
 int get_variable_type(char *lexem) {
   if(!is_expected_lexem(lexem, "entier") && !is_expected_lexem(lexem, "rien"))
   {
@@ -30,7 +32,8 @@ int get_variable_type(char *lexem) {
   }
 }
 
-int analyze_type(buffer_t * buffer)
+// parse return params
+int analyze_return_type(buffer_t * buffer)
 {
   char* lexem = move_to_next_lexem(buffer);
 
@@ -44,6 +47,7 @@ int analyze_type(buffer_t * buffer)
   }
 }
 
+// parse a return instruction
 void analyze_return(buffer_t * buffer)
 {
   char* lexem = move_to_next_lexem(buffer);
@@ -53,16 +57,18 @@ void analyze_return(buffer_t * buffer)
   }
 }
 
+// parse a condition instruction
 void analyze_condition(buffer_t * buffer)
 {
   char* lexem = move_to_next_lexem(buffer);
 
-  //explore to verify if there is a "sinon" or a "sinon si"
+  //explore to verify if there is a "sinon" or a "sinon si" and check their order
   while(!is_expected_lexem(lexem, "}")){
     lexem = move_to_next_lexem(buffer);
   }
 }
 
+// parse a loop instruction
 void analyze_loop(buffer_t * buffer)
 {
   char* lexem = move_to_next_lexem(buffer);
@@ -72,6 +78,7 @@ void analyze_loop(buffer_t * buffer)
   }
 }
 
+// parse a init instruction
 void analyze_init(buffer_t * buffer)
 {
   char* lexem = move_to_next_lexem(buffer);
@@ -81,22 +88,22 @@ void analyze_init(buffer_t * buffer)
   }
 }
 
-void analyze_assignation(buffer_t * buffer)
+// parse a assignation instruction
+void analyze_assignation(buffer_t * buffer,char *lexem)
 {
-  char* lexem = move_to_next_lexem(buffer);
-
   while(!is_expected_lexem(lexem, ";") ){
     lexem = move_to_next_lexem(buffer);
   }
 }
 
+// parse all differents instruction block of a function
 void analyze_instruction(buffer_t * buffer,char* lexem)
 {
   if(is_expected_lexem(lexem, "retourner"))
   {
     analyze_return(buffer);
   }
-  else if(is_expected_lexem(lexem, "si"))
+  else if(is_expected_lexem(lexem, "si") || is_expected_lexem(lexem, "sinon"))
   {
     analyze_condition(buffer);
   }
@@ -108,13 +115,13 @@ void analyze_instruction(buffer_t * buffer,char* lexem)
   {
     analyze_init(buffer);
   }
-  //detect assignation thanks to symbol table
-
-  // else if(){
-  //   analyze_assignation(buffer);
-  // }
+  else if(!is_expected_lexem(lexem, ";") && !is_expected_lexem(lexem, "}"))
+  {
+    analyze_assignation(buffer,lexem);
+  }
 }
 
+// parse the function body
 void analyze_function_body(buffer_t * buffer)
 {
   char* lexem = move_to_next_lexem(buffer);
@@ -125,16 +132,14 @@ void analyze_function_body(buffer_t * buffer)
     exit(1);
   }
 
+  // loop through the function untill it find the final curly braces
   while(!is_expected_lexem(lexem, "}") && buf_eof(buffer) == false){
     lexem = move_to_next_lexem(buffer);
     analyze_instruction(buffer,lexem);
-
-    // use this line to print "}" or every instruction first word
-    // do not work for "sinon" and "sinon si" and assignation
-    //printf("%s\n", lexem);
   }
 }
 
+// parse function params
 ast_list_t* analyze_function_params(buffer_t * buffer) {
   ast_list_t* params  = NULL;
   char* lexem = move_to_next_lexem(buffer);
@@ -168,21 +173,18 @@ ast_list_t* analyze_function_params(buffer_t * buffer) {
   return params;
 }
 
+// Loop through function and create an function ast
 void analyze_function(buffer_t *buffer)
 {
+  // parse the function name, parameters and return type
   buf_move_lock(buffer);
   char *functionName = move_to_next_lexem(buffer);
   ast_list_t *params = analyze_function_params(buffer);
-  int return_type = analyze_type(buffer);
-
-  //printf("%s\n", functionName);
+  int return_type = analyze_return_type(buffer);
 
   // I mad every analyze function return void but they should return ast_list_t*
 
-  //ast_list_t *stmts =
   analyze_function_body(buffer);
-
-  //ast_new_function(functionName, return_type, params, stmts)
 
   if (params != NULL)
   {
@@ -211,5 +213,7 @@ void parser(FILE *file)
     {
       analyze_function(&buffer);
     }
+
+    free_lexer(lexem);
   }
 }

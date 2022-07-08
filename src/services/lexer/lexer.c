@@ -5,7 +5,7 @@
 #include "../ast/ast.h"
 #include "../buffer/buffer.h"
 
-// Return the next char* in the buffer and put the cursor at the end of this char*
+// free lexer
 void free_lexer(char *lexer) {
   if (lexer != NULL)
   {
@@ -13,6 +13,7 @@ void free_lexer(char *lexer) {
   }
 }
 
+// Return the next char* in the buffer and put the cursor at the end of this char*
 char *lexer_getalphanum (buffer_t * buffer) {
   long counter = buffer->it;
   char *alphanum = malloc(BUF_SIZE);
@@ -107,6 +108,7 @@ long lexer_getnumber (buffer_t * buffer){
   return result;
 }
 
+// move to the next lexem and move the pointer
 char *move_to_next_lexem(buffer_t * buffer) {
   buf_skipblank(buffer);
   return lexer_getalphanum(buffer);

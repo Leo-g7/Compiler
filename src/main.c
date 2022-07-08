@@ -12,8 +12,9 @@
 ast_t* convertExpressionIntoAst(ast_list_t* entryAst);
 bool operandPriority(char* op1, char* op2);
 // void exitProgram(char* msg);
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
+  // Check argc
   if (argc == 2 || argc == 5)
   {
     //testConversion();
@@ -21,6 +22,8 @@ int main(int argc, char *argv[])
     if (filename != NULL)
     {
       FILE *file = fopen(filename, "r");
+
+      //Check if the file exist
       if (file != NULL)
       {
         parser(file);

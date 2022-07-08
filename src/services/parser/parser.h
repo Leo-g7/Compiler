@@ -11,7 +11,7 @@ void analyze_return(buffer_t * buffer);
 void analyze_condition(buffer_t * buffer);
 void analyze_loop(buffer_t * buffer);
 void analyze_init(buffer_t * buffer);
-void analyze_assignation(buffer_t * buffer);
+void analyze_assignation(buffer_t * buffer,char *lexem);
 void analyze_instruction(buffer_t * buffer,char* lexem);
 void analyze_function_body(buffer_t * buffer);
 ast_list_t* analyze_function_params(buffer_t * buffer);
