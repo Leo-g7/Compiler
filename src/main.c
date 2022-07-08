@@ -2,36 +2,31 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include <string.h>
 #include "services/buffer/buffer.h"
 #include "services/lexer/lexer.h"
+#include "utils/stack.h"
+#include "services/parser/parser.h"
+#include "services/parser/expression.h"
 
-int main(int argc, char* argv[])
+ast_t* convertExpressionIntoAst(ast_list_t* entryAst);
+bool operandPriority(char* op1, char* op2);
+// void exitProgram(char* msg);
+int main(int argc, char *argv[])
 {
+  // Check argc
   if (argc == 2 || argc == 5)
   {
+    //testConversion();
     char *filename = argv[1];
     if (filename != NULL)
     {
-      buffer_t buffer;
-      FILE* file = fopen(filename, "r");
+      FILE *file = fopen(filename, "r");
+
+      //Check if the file exist
       if (file != NULL)
       {
-        buf_init(&buffer, file);
-        buf_lock (&buffer);
-
-        while (buf_eof(&buffer) == false)
-        {
-          char *getalphanum = lexer_getalphanum(&buffer);
-
-          printf("%s\n",getalphanum);
-
-          buf_skipblank(&buffer);
-
-          if (getalphanum != NULL)
-          {
-            free(getalphanum);
-          }
-        }
+        parser(file);
       }
       else
       {
