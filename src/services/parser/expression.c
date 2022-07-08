@@ -1,18 +1,39 @@
-// int main(int argc, char *argv[]) {
-//   if (argc == 2 || argc == 5) {
-//     ast_list_t* first;
-//     first->ast = ast_new_integer(10);
-//     ast_list_t* second;
-//     second->ast = ast_new_operand('+', NULL);
-//     ast_list_t* third = ast_new_integer(2);
-//     second->next = third;
-//     first->next = second;
-//   }
-// }
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include "expression.h"
+#include <ctype.h> // import isdigit
+#include "../ast/ast.h"
+#include "../../utils/stack.h"
 
-// take the expression and returning the ast expression (output)
-//ast_t* convertExpressionIntoAst(ast_list_t* entryAst) {
-  // int exprsLength = strlen(expression);
+ast_t* convertExpressionIntoAst(ast_list_t* entryAst);
+
+void testConversion() {
+  ast_list_t* ast_list = NULL;
+  ast_list_add(&ast_list, ast_new_integer(13));
+  char plus[] = "+";
+  ast_list_add(&ast_list, ast_new_operand(plus));
+  ast_list_add(&ast_list, ast_new_integer(2));
+  convertExpressionIntoAst(ast_list);
+}
+
+//take the expression and returning the ast expression (output)
+ast_t* convertExpressionIntoAst(ast_list_t* entryAst) {
+  ast_list_t* loopAst = entryAst;
+  bool loopFlag = true;
+  int size = get_ast_size(entryAst);
+  // create stack and add "\0" value
+  stack_t* stk = newStack();
+  push(stk, '\0');
+  while(loopFlag) { // if next ast is not null
+    if(loopAst->next == NULL) loopFlag = false;
+    else {
+      //if(!operandPriority(top(stk), loopAst->ast.)) {
+
+      //}
+      loopAst = next_ast(loopAst);
+    }
+  }
   // Stack *stack;
   // addElement(stack, '\0');
   // char* output = (char*) malloc(sizeof(char) * exprsLength);
@@ -35,18 +56,24 @@
   //   }
   // }
   // free(stack);
-  // return output;
-//}
+  ast_t* ast;
+  return ast;
+}
+//take the expression and returning the ast expression (output)
+
+char* getValueFromAst() {
+  
+}
 
 // check if string is a number
-// bool isNumber(char* value) {
-//   for(int i=0; i < strlen(value); i++) {
-//     if(!isdigit(value[i])) return false;
-//   }
-//   return true;
-// }
+bool isNumber(char* value) {
+  for(int i=0; i < strlen(value); i++) {
+    if(!isdigit(value[i])) return false;
+  }
+  return true;
+}
 
-// left priority == true, right priority == false
+//left priority == true, right priority == false
 // bool operandPriority(char *op1, char *op2) {
 
 //   if( op1 == '+' && op2 == '+') return true;

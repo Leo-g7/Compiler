@@ -3,12 +3,11 @@
 #include <windows.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h> // import isdigit
 #include "services/buffer/buffer.h"
 #include "services/lexer/lexer.h"
-#include "services/ast/ast.h"
 #include "utils/stack.h"
 #include "services/parser/parser.h"
+#include "services/parser/expression.h"
 
 ast_t* convertExpressionIntoAst(ast_list_t* entryAst);
 bool operandPriority(char* op1, char* op2);
@@ -17,6 +16,7 @@ int main(int argc, char *argv[])
 {
   if (argc == 2 || argc == 5)
   {
+    //testConversion();
     char *filename = argv[1];
     if (filename != NULL)
     {

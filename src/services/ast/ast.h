@@ -58,7 +58,6 @@ typedef struct ast_t
     struct
     {
       char* operValue;
-      struct ast_t *nextOper;
     } operand;
     struct
     {
@@ -127,7 +126,9 @@ ast_list_t *ast_list_new_node(ast_t *elem);
 ast_list_t *ast_list_add(ast_list_t **list, ast_t *elem);
 void ast_display(ast_t *node, int level);
 void ast_list_display(ast_list_t *list);
-ast_t *ast_new_operand(char *op, ast_t *next);
+ast_list_t *next_ast(ast_list_t *list);
+ast_t *ast_new_operand(char *op);
+int get_ast_size(ast_list_t* list);
 
 #define AST_H
 #endif /* AST_H */

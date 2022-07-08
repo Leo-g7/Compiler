@@ -1,6 +1,7 @@
 #include "ast.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // Create a new AST node
 
@@ -14,9 +15,8 @@ ast_t *ast_new_integer(long value)
     return node;
 }
 
-ast_t* ast_new_operand(char* op, ast_t* ast) {
+ast_t* ast_new_operand(char* op) {
     ast_t* node = (ast_t*) malloc(sizeof(ast_t));
-    node->operand.nextOper =  ast;
     node->operand.operValue = op;
     node->type = AST_OPERAND;
     return node;
@@ -140,6 +140,27 @@ ast_list_t *ast_list_new_node(ast_t *elem)
     node->ast = elem;
     node->next = NULL;
     return node;
+}
+
+ast_list_t *next_ast(ast_list_t *list) {
+    if(list->next == NULL) {
+        return NULL;
+    }
+    return list->next;
+}
+
+int get_ast_size(ast_list_t* list) {
+    int size = 0;
+    ast_list_t* loopAst = list;
+    bool loopFlag = true;
+    while(loopFlag) { // if next ast is not null
+        if(loopAst->next == NULL) loopFlag = false;
+        else {
+            size++;
+            loopAst = next_ast(loopAst);
+        }
+    }
+    return size;
 }
 
 // Append an ast to the list
