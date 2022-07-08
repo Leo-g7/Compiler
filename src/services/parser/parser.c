@@ -44,6 +44,97 @@ int analyze_type(buffer_t * buffer)
   }
 }
 
+void analyze_return(buffer_t * buffer)
+{
+  char* lexem = move_to_next_lexem(buffer);
+
+  while(!is_expected_lexem(lexem, ";") ){
+    lexem = move_to_next_lexem(buffer);
+  }
+}
+
+void analyze_condition(buffer_t * buffer)
+{
+  char* lexem = move_to_next_lexem(buffer);
+
+  //explore to verify if there is a "sinon" or a "sinon si"
+  while(!is_expected_lexem(lexem, "}")){
+    lexem = move_to_next_lexem(buffer);
+  }
+}
+
+void analyze_loop(buffer_t * buffer)
+{
+  char* lexem = move_to_next_lexem(buffer);
+
+  while(!is_expected_lexem(lexem, "}") ){
+    lexem = move_to_next_lexem(buffer);
+  }
+}
+
+void analyze_init(buffer_t * buffer)
+{
+  char* lexem = move_to_next_lexem(buffer);
+
+  while(!is_expected_lexem(lexem, ";") ){
+    lexem = move_to_next_lexem(buffer);
+  }
+}
+
+void analyze_assignation(buffer_t * buffer)
+{
+  char* lexem = move_to_next_lexem(buffer);
+
+  while(!is_expected_lexem(lexem, ";") ){
+    lexem = move_to_next_lexem(buffer);
+  }
+}
+
+void analyze_instruction(buffer_t * buffer,char* lexem)
+{
+  if(is_expected_lexem(lexem, "retourner"))
+  {
+    analyze_return(buffer);
+  }
+  else if(is_expected_lexem(lexem, "si"))
+  {
+    analyze_condition(buffer);
+  }
+  else if(is_expected_lexem(lexem, "tantque"))
+  {
+    analyze_loop(buffer);
+  }
+  else if(is_expected_lexem(lexem, "entier"))
+  {
+    analyze_init(buffer);
+  }
+  //detect assignation thanks to symbol table
+
+  // else if(){
+  //   analyze_assignation(buffer);
+  // }
+}
+
+void analyze_function_body(buffer_t * buffer)
+{
+  char* lexem = move_to_next_lexem(buffer);
+
+  if(!is_expected_lexem(lexem, "{"))
+  {
+    printf("Error: Missing curly braces\n");
+    exit(1);
+  }
+
+  while(!is_expected_lexem(lexem, "}") && buf_eof(buffer) == false){
+    lexem = move_to_next_lexem(buffer);
+    analyze_instruction(buffer,lexem);
+
+    // use this line to print "}" or every instruction first word
+    // do not work for "sinon" and "sinon si" and assignation
+    //printf("%s\n", lexem);
+  }
+}
+
 ast_list_t* analyze_function_params(buffer_t * buffer) {
   ast_list_t* params  = NULL;
   char* lexem = move_to_next_lexem(buffer);
@@ -84,6 +175,15 @@ void analyze_function(buffer_t *buffer)
   ast_list_t *params = analyze_function_params(buffer);
   int return_type = analyze_type(buffer);
 
+  //printf("%s\n", functionName);
+
+  // I mad every analyze function return void but they should return ast_list_t*
+
+  //ast_list_t *stmts =
+  analyze_function_body(buffer);
+
+  //ast_new_function(functionName, return_type, params, stmts)
+
   if (params != NULL)
   {
     free(params);
@@ -96,19 +196,6 @@ void parser(FILE *file)
   buffer_t buffer;
   buf_init(&buffer, file);
   buf_lock(&buffer);
-
-  // create a ast_integer and display it
-  // long value = 42;
-  // ast_t *test = ast_new_integer(value);
-  // ast_display(test, 0);
-
-  // // same for ast_binary
-  // ast_binary_e op = AST_PLUS;
-  // ast_t *test2 = ast_new_binary(op, NULL, NULL);
-  // ast_display(test2, 0);
-
-  // same for function
-
   ast_list_t *ast_list;
 
   while (buf_eof(&buffer) == false)
